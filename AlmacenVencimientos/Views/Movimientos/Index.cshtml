@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AlmacenVencimientos.Models.MovimientoInventario>
+
+@{
+    ViewData["Title"] = "Movimientos de Inventario";
+}
+
+<h1>Movimientos de Inventario</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Movimiento</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Lote</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Motivo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                <td>@item.Lote?.Producto?.Nombre</td>
+                <td>@item.Lote?.CodigoLote</td>
+                <td>@item.Tipo</td>
+                <td>@item.Cantidad</td>
+                <td>@item.Motivo</td>
+            </tr>
+        }
+    </tbody>
+</table>

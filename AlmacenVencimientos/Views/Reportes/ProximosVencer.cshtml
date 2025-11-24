@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AlmacenVencimientos.Models.Lote>
+
+@{
+    var dias = (int)(ViewData["Dias"] ?? 30);
+    ViewData["Title"] = $"Productos próximos a vencer (≤ {dias} días)";
+}
+
+<h1>Productos próximos a vencer (≤ @dias días)</h1>
+
+<form asp-action="ProximosVencer" method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <label for="dias" class="col-form-label">Rango en días:</label>
+    </div>
+    <div class="col-auto">
+        <input type="number" id="dias" name="dias" value="@dias"
+               class="form-control" min="1" max="365" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Aplicar</button>
+    </div>
+    <div class="col-auto">
+        <a asp-action="ProximosVencer" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
+<p>
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Volver al panel</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No hay lotes próximos a vencer en el rango seleccionado.</p>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Código Lote</th>
+                <th>Fecha Vencimiento</th>
+                <th>Días restantes</th>
+                <th>Cantidad</th>
+                <th>Ubicación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var diasRestantes = (item.FechaVencimiento.Date - DateTime.Today).Days;
+                <tr>
+                    <td>@item.Producto?.Nombre</td>
+                    <td>@item.CodigoLote</td>
+                    <td>@item.FechaVencimiento.ToString("dd/MM/yyyy")</td>
+                    <td>@diasRestantes</td>
+                    <td>@item.CantidadActual</td>
+                    <td>@item.Ubicacion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

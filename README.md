@@ -210,14 +210,4 @@ Nombre: Junior Alexis Valera
 Carrera: Ingeniería de Software
 
 Asignatura: Proyecto Integrador – Sistema de Control de Inventario de Productos por Vencimiento
-📜 Licencia
-
-Este proyecto se puede licenciar como:
-
-Uso académico (por defecto), o
-
-Cualquier licencia abierta que decidas usar, por ejemplo:
-
-MIT
-
-GPL-3.0
+📜 Licencia Uso académico MIT GPL-3.0

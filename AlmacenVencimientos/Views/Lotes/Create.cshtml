@@ -1,0 +1,66 @@
+﻿@model AlmacenVencimientos.Models.Lote
+
+@{
+    ViewData["Title"] = "Nuevo Lote";
+}
+
+<h1>Nuevo Lote</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ProductoId" class="control-label">Producto</label>
+                <select asp-for="ProductoId" class="form-control"
+                        asp-items="@(ViewData["ProductoId"] as IEnumerable<SelectListItem>)">
+                    <option value="">-- Seleccione un producto --</option>
+                </select>
+                <span asp-validation-for="ProductoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CodigoLote" class="control-label"></label>
+                <input asp-for="CodigoLote" class="form-control" />
+                <span asp-validation-for="CodigoLote" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FechaVencimiento" class="control-label"></label>
+                <input asp-for="FechaVencimiento" class="form-control" type="date" />
+                <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CantidadActual" class="control-label"></label>
+                <input asp-for="CantidadActual" class="form-control" />
+                <span asp-validation-for="CantidadActual" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CostoUnitario" class="control-label"></label>
+                <input asp-for="CostoUnitario" class="form-control" />
+                <span asp-validation-for="CostoUnitario" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Ubicacion" class="control-label"></label>
+                <input asp-for="Ubicacion" class="form-control" />
+                <span asp-validation-for="Ubicacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

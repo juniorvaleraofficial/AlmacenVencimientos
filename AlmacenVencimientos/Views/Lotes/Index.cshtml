@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AlmacenVencimientos.Models.Lote>
+
+@{
+    ViewData["Title"] = "Lotes";
+}
+
+<h1>Lotes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Lote</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Código Lote</th>
+            <th>Fecha Vencimiento</th>
+            <th>Cantidad</th>
+            <th>Costo Unitario</th>
+            <th>Ubicación</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Producto?.Nombre</td>
+                <td>@item.CodigoLote</td>
+                <td>@item.FechaVencimiento.ToString("dd/MM/yyyy")</td>
+                <td>@item.CantidadActual</td>
+                <td>@item.CostoUnitario.ToString("N2")</td>
+                <td>@item.Ubicacion</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

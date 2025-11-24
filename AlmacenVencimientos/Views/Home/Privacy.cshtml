@@ -1,6 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Acerca del sistema y privacidad de datos";
 }
+
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p class="text-muted">
+    Esta página describe brevemente el propósito del sistema <strong>AlmacenVencimientos</strong>
+    y el tipo de información que maneja.
+</p>
+
+<hr />
+
+<h2>1. Propósito del sistema</h2>
+<p>
+    <strong>AlmacenVencimientos</strong> es un sistema de uso académico orientado al
+    control de inventario por lotes, con fechas de vencimiento y alertas de stock.
+    Su objetivo principal es:
+</p>
+<ul>
+    <li>Registrar productos del almacén.</li>
+    <li>Controlar los lotes con su fecha de vencimiento y ubicación.</li>
+    <li>Registrar movimientos de inventario (entradas, salidas y ajustes).</li>
+    <li>Generar alertas de productos vencidos o próximos a vencer.</li>
+    <li>Generar reportes de inventario y vencimientos.</li>
+</ul>
+
+<h2>2. Tipo de información almacenada</h2>
+<p>El sistema maneja únicamente información relacionada con inventario, por ejemplo:</p>
+<ul>
+    <li><strong>Productos:</strong> nombre, categoría, código, estado (activo/inactivo).</li>
+    <li><strong>Lotes:</strong> producto asociado, código de lote, fecha de vencimiento, cantidad, costo unitario, ubicación.</li>
+    <li><

@@ -1,31 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AlmacenVencimientos.Data;
 using AlmacenVencimientos.Models;
 
 namespace AlmacenVencimientos.Controllers
 {
-    public class ProductoesController : Controller
+    public class ProductosController : Controller
     {
         private readonly AppDbContext _context;
 
-        public ProductoesController(AppDbContext context)
+        public ProductosController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Productoes
-        public async Task<IActionResult> Index()
+        // GET: Productos
+        public async Task<IActionResult> Index(string buscar)
         {
-            return View(await _context.Productos.ToListAsync());
+            var query = _context.Productos.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(buscar))
+            {
+                query = query.Where(p =>
+                    p.Nombre.Contains(buscar) ||
+                    (p.Codigo != null && p.Codigo.Contains(buscar)) ||
+                    (p.Categoria != null && p.Categoria.Contains(buscar)));
+            }
+
+            query = query.OrderBy(p => p.Nombre);
+
+            ViewData["Buscar"] = buscar;
+
+            return View(await query.ToListAsync());
         }
 
-        // GET: Productoes/Details/5
+        // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,15 +54,13 @@ namespace AlmacenVencimientos.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Create
+        // GET: Productos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Productoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Productos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Categoria,Codigo,Activo")] Producto producto)
@@ -65,7 +74,7 @@ namespace AlmacenVencimientos.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Edit/5
+        // GET: Productos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,9 +90,7 @@ namespace AlmacenVencimientos.Controllers
             return View(producto);
         }
 
-        // POST: Productoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Productos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Categoria,Codigo,Activo")] Producto producto)
@@ -116,7 +123,7 @@ namespace AlmacenVencimientos.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Delete/5
+        // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +141,7 @@ namespace AlmacenVencimientos.Controllers
             return View(producto);
         }
 
-        // POST: Productoes/Delete/5
+        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -143,9 +150,9 @@ namespace AlmacenVencimientos.Controllers
             if (producto != null)
             {
                 _context.Productos.Remove(producto);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

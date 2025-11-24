@@ -1,8 +1,121 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model AlmacenVencimientos.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Panel principal del almacén</h1>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Productos</h5>
+                <p class="card-text display-6">@Model.TotalProductos</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Lotes (totales)</h5>
+                <p class="card-text display-6">@Model.TotalLotes</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Lotes con stock</h5>
+                <p class="card-text display-6">@Model.TotalLotesConStock</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Movimientos</h5>
+                <p class="card-text display-6">@Model.TotalMovimientos</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+<h2>Alertas por vencimiento</h2>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h6 class="card-title text-danger">Vencidos</h6>
+                <p class="card-text h3">@Model.LotesVencidos</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-warning">
+            <div class="card-body">
+                <h6 class="card-title text-warning">≤ 7 días</h6>
+                <p class="card-text h3">@Model.LotesVencen7Dias</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-info">
+            <div class="card-body">
+                <h6 class="card-title text-info">8 - 15 días</h6>
+                <p class="card-text h3">@Model.LotesVencen8a15</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-success">
+            <div class="card-body">
+                <h6 class="card-title text-success">16 - 30 días</h6>
+                <p class="card-text h3">@Model.LotesVencen16a30</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-outline-primary" asp-controller="Alertas" asp-action="Index">
+        Ver detalle de alertas
+    </a>
+</p>
+
+<h2>Próximos a vencer (top 5)</h2>
+
+@if (!Model.ProximosAVencer.Any())
+{
+    <p>No hay lotes próximos a vencer.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Código Lote</th>
+                <th>Fecha Vencimiento</th>
+                <th>Cantidad</th>
+                <th>Ubicación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ProximosAVencer)
+            {
+                <tr>
+                    <td>@item.Producto?.Nombre</td>
+                    <td>@item.CodigoLote</td>
+                    <td>@item.FechaVencimiento.ToString("dd/MM/yyyy")</td>
+                    <td>@item.CantidadActual</td>
+                    <td>@item.Ubicacion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -128,8 +128,7 @@ Para ejecutar el proyecto localmente necesitas:
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/TU-USUARIO/proyecto-almacen-vencimientos.git
-   cd proyecto-almacen-vencimientos
+   https://github.com/juniorvaleraofficial/AlmacenVencimientos.git
    ```
    ---
 

@@ -3,16 +3,27 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Solo usar el puerto especial cuando NO estamos en Development (o sea, en Render)
+// En PRODUCCIÓN (Render) usar el puerto que nos da la variable PORT
 if (!builder.Environment.IsDevelopment())
 {
     var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
     builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 }
 
-// DbContext con SQL Server (lo que ya tenías)
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// 👇 CONFIGURAR LA BD SEGÚN EL ENTORNO
+
+if (builder.Environment.IsDevelopment())
+{
+    // En tu PC: SQL Server normal (lo que ya tenías)
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+else
+{
+    // En Render: BD EN MEMORIA (no necesita servidor de SQL)
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseInMemoryDatabase("AlmacenVencimientosDb"));
+}
 
 builder.Services.AddControllersWithViews();
 

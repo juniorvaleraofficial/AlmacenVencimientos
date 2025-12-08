@@ -3,6 +3,8 @@
 Sistema web para gestionar el inventario de un almacén con enfoque en el control de productos con **fecha de vencimiento**, priorizando los **lotes próximos a caducar** y apoyando la política **FEFO (First Expire, First Out)**.
 
 Este proyecto fue desarrollado como parte de la asignatura **Proyecto Integrador**, utilizando tecnologías del ecosistema **.NET** y buenas prácticas de arquitectura **MVC**.
+## Puedes abrir el Proyecto en 
+[Sistema de AlmacenVencimientos](https://almacenvencimientos.onrender.com/)
 
 ---
 

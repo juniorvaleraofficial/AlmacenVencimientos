@@ -10,7 +10,7 @@ if (!builder.Environment.IsDevelopment())
     builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 }
 
-// 👇 CONFIGURAR LA BD SEGÚN EL ENTORNO
+// CONFIGURAR LA BD SEGÚN EL ENTORNO
 
 if (builder.Environment.IsDevelopment())
 {
